@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Trip Planner</title>
+  <meta charset="UTF-8" />
+</head>
+<body>
+  <h1>AI Trip Planner</h1>
+  <form id="tripForm">
+    <input type="text" id="destination" placeholder="Destination" required /><br />
+    <input type="text" id="dates" placeholder="Travel Dates" required /><br />
+    <input type="text" id="interests" placeholder="Interests (beach, museums...)" required /><br />
+    <input type="text" id="budget" placeholder="Budget (low, medium, high)" required /><br />
+    <button type="submit">Generate Itinerary</button>
+  </form>
+  <pre id="result"></pre>
+
+  <script>
+    document.getElementById("tripForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        destination: document.getElementById("destination").value,
+        dates: document.getElementById("dates").value,
+        interests: document.getElementById("interests").value,
+        budget: document.getElementById("budget").value,
+      };
+      const res = await fetch("http://localhost:8000/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      document.getElementById("result").textContent = json.itinerary || JSON.stringify(json);
+    });
+  </script>
+</body>
+</html>

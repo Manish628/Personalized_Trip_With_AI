@@ -1,0 +1,1 @@
+# Currently empty, but you can add Pydantic models here for database responses
